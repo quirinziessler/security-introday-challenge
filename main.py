@@ -8,48 +8,56 @@ import sqlite3
 connection = sqlite3.connect('db')
 cursor = connection.cursor()
 
+
 class BaseHandler(tornado.web.RequestHandler):
     def get_current_user(self):
         return self.get_secure_cookie("user")
+
 
 class MainHandler(BaseHandler):
     def get(self):
         cursor.execute("SELECT * FROM fruits")
         x = cursor.fetchall()
-        
+
         self.render("index.html", fruits=x)
 
     def post(self):
         feedback = self.get_argument('feedback')
         self.write("Thank you for the feedback: " + feedback)
 
+
 class FruitHandler(BaseHandler):
     @tornado.web.authenticated
     def post(self, id):
-        cursor.execute("update fruits set quantity=" + self.get_argument("quantity") + " where id=" + id)
+        cursor.execute("UPDATE fruits SET quantity=" + self.get_argument("quantity") + " WHERE id=" + id)
         connection.commit()
 
         self.redirect("/")
 
+
 class LoginHandler(BaseHandler):
     def get(self):
         self.render("login.html")
-    
+
     def post(self):
-        cursor.execute("SELECT * FROM users WHERE username=\"{}\" AND password=\"{}\"".format(self.get_body_argument('username'), self.get_body_argument("password")))
+        cursor.execute(
+            "SELECT * FROM users WHERE username=\"{}\" AND password=\"{}\"".format(self.get_body_argument('username'),
+                                                                                   self.get_body_argument("password")))
         a = cursor.fetchone()
 
         if not a:
-            self.render("login.html")
+            self.render("login-failed.html")
             return
 
         self.set_secure_cookie("user", a[1])
         self.redirect("/")
 
+
 class LogoutHandler(BaseHandler):
     def get(self):
         self.clear_cookie("user")
         self.redirect("/")
+
 
 class Application(tornado.web.Application):
     def __init__(self):

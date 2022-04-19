@@ -15,6 +15,12 @@ Your task is to:
     ```bash
     docker run -d -p 8000:8000 --name=security-introday-challenge security-introday-challenge
     ```
+    ```bash
+    docker stop security-introday-challenge
+    ```
+    ```bash
+    docker start security-introday-challenge
+    ```
 3. Present the improved application and show us the changes you made.
 
 Notes: \*Some flaws cannot be fixed immediately. Document them and explain why they are bad and what will you change.

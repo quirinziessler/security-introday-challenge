@@ -13,7 +13,7 @@ Your task is to:
     docker build --tag security-introday-challenge .
     ```
     ```bash
-    docker run -p 8000:8000 security-introday-challenge
+    docker run -d -p 8000:8000 --name=security-introday-challenge security-introday-challenge
     ```
 3. Present the improved application and show us the changes you made.
 

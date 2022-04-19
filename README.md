@@ -7,7 +7,14 @@ Here is a badly written application with many flaws.
 Your task is to:
 
 1. Study the application **as a whole** and identify the flaws. Try to fix as many of them as possible*.
-2. Containerize the application.
+2. Containerize the application. 
+    ->Dockerfile 
+    ```bash
+    docker build --tag security-introday-challenge .
+    ```
+    ```bash
+    docker run -p 8000:8000 security-introday-challenge
+    ```
 3. Present the improved application and show us the changes you made.
 
 Notes: \*Some flaws cannot be fixed immediately. Document them and explain why they are bad and what will you change.
